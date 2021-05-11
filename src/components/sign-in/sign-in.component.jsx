@@ -32,7 +32,7 @@ class SignIn extends React.Component {
 
         <form onSubmit={this.handleSubmit}>
           <FormInput
-            id='email'
+            id='signInEmail'
             type='email'
             name='email'
             value={this.state.email}
@@ -41,7 +41,7 @@ class SignIn extends React.Component {
             required
           />
           <FormInput
-            id='password'
+            id='signInPassword'
             type='password'
             name='password'
             value={this.state.password}
