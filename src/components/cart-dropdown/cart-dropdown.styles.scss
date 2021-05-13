@@ -15,8 +15,10 @@
     height: 240px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    border: none;
+  }
+
+  .cart-items-overflow {
+    overflow-y: scroll;
   }
 
   button {

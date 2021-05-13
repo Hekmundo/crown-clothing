@@ -1,12 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { selectCartItems } from '../../redux/cart/cart.selectors';
 import './cart-dropdown.styles.scss';
 import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
 
 const CartDropdown = ({ cartItems }) => (
   <div className='cart-dropdown'>
-    <div className='cart-items'>
+    <div
+      className={`${
+        cartItems.length > 3 ? 'cart-items-overflow' : ''
+      } cart-items`}
+    >
       {cartItems.map((cartItem) => (
         <CartItem key={cartItem.id} item={cartItem} />
       ))}
@@ -16,7 +21,7 @@ const CartDropdown = ({ cartItems }) => (
 );
 
 const mapStateToProps = (state) => ({
-  cartItems: state.cart.cartItems,
+  cartItems: selectCartItems(state),
 });
 
 export default connect(mapStateToProps)(CartDropdown);
