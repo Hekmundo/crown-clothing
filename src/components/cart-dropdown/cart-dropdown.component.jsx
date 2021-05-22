@@ -12,7 +12,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
   <div className='cart-dropdown'>
     <div
       className={`${
-        cartItems.length > 3 ? 'cart-items-overflow' : ''
+        cartItems.length > 2 ? 'cart-items-overflow' : ''
       } cart-items`}
     >
       {cartItems.length ? (
