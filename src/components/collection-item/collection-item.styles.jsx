@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { CustomButtonContainer } from '../custom-button/custom-button.styles';
 
 export const Image = styled.div`
-  background-image: ${(props) => `url(${props.imageUrl})`};
+  background-image: url(${(props) => props.imageUrl});
   width: 100%;
   height: 95%;
   background-size: cover;
