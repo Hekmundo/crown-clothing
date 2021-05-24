@@ -18,11 +18,12 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
+    // Subscription to Observable
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
-        // executes callback on instantiation and on document snapshot changes
+        // Executes callback on instantiation and on document snapshot changes
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
             id: snapShot.id,
@@ -30,7 +31,7 @@ class App extends React.Component {
           });
         });
       } else {
-        setCurrentUser(userAuth); // userAuth === null
+        setCurrentUser(userAuth);
       }
     });
   }
