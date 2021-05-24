@@ -11,4 +11,4 @@ export const Title = styled.h1`
   margin-bottom: 25px;
 `;
 
-export const ItemsPreview = styled(Items);
+export const ItemsPreview = styled(Items)``;
