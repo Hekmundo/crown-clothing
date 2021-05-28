@@ -1,5 +1,5 @@
-import { takeLatest, all, put, call } from 'redux-saga/effects';
-import UserActionTypes from './shop.types';
+import { takeLatest, put, call } from 'redux-saga/effects';
+import ShopActionTypes from './shop.types';
 import {
   fetchCollectionsSuccess,
   fetchCollectionsFailure,
@@ -9,20 +9,26 @@ import {
   firestore,
 } from '../../firebase/firebase.utils';
 
-function* onFetchCollectionsStart() {
-  const collectionRef = yield firestore.collection('collections');
+function* fetchCollectionsAsync() {
   try {
+    const collectionRef = firestore.collection('collections');
     const snapShot = yield collectionRef.get();
-    const collectionsMap = yield convertCollectionsSnapshotToMap(snapShot);
+
+    // call() allows syncronous functions to be yielded
+    // AND defer more control to redux-saga
+    const collectionsMap = yield call(
+      convertCollectionsSnapshotToMap,
+      snapShot
+    );
     yield put(fetchCollectionsSuccess(collectionsMap));
   } catch (error) {
     yield put(fetchCollectionsFailure(error.message));
   }
 }
 
-export function* fetchCollectionsSaga() {
+export function* fetchCollectionsStart() {
   yield takeLatest(
-    UserActionTypes.FETCH_COLLECTIONS_START,
-    onFetchCollectionsStart
+    ShopActionTypes.FETCH_COLLECTIONS_START,
+    fetchCollectionsAsync
   );
 }
