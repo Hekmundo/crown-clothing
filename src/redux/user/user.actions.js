@@ -42,6 +42,11 @@ export const signUpStart = (userCredentials) => ({
   payload: userCredentials,
 });
 
+export const signUpSuccess = ({ user, additionalData }) => ({
+  type: UserActionTypes.SIGN_UP_SUCCESS,
+  payload: { user, additionalData },
+});
+
 export const signUpFailure = (errorMessage) => ({
   type: UserActionTypes.SIGN_UP_FAILURE,
   payload: errorMessage,

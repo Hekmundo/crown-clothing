@@ -6,8 +6,8 @@ import {
   signOutSuccess,
   signOutFailure,
   signUpFailure,
+  signUpSuccess,
 } from './user.actions';
-import { clearCart } from '../cart/cart.actions';
 import {
   auth,
   googleProvider,
@@ -15,9 +15,13 @@ import {
   getCurrentUser,
 } from '../../firebase/firebase.utils';
 
-function* getSnapshotFromUserAuth(userAuth) {
+function* getSnapshotFromUserAuth(userAuth, additionalData) {
   try {
-    const userRef = yield call(createUserProfileDocument, userAuth);
+    const userRef = yield call(
+      createUserProfileDocument,
+      userAuth,
+      additionalData
+    );
     const userSnapshot = yield userRef.get();
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
@@ -47,7 +51,6 @@ function* signOut() {
   try {
     yield auth.signOut();
     yield put(signOutSuccess());
-    yield put(clearCart());
   } catch (error) {
     yield put(signOutFailure(error.message));
   }
@@ -56,10 +59,14 @@ function* signOut() {
 function* signUp({ payload: { displayName, email, password } }) {
   try {
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-    yield getSnapshotFromUserAuth({ ...user, displayName });
+    yield put(signUpSuccess({ user, additionalData: { displayName } }));
   } catch (error) {
     put(signUpFailure(error.message));
   }
+}
+
+function* signInAfterSignUp({ payload: { user, additionalData } }) {
+  yield getSnapshotFromUserAuth(user, additionalData);
 }
 
 function* isUserAuthenticated() {
@@ -88,6 +95,10 @@ function* onSignUpStart() {
   yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
 }
 
+function* onSignUpSuccess() {
+  yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp);
+}
+
 function* onCheckUserSession() {
   yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated);
 }
@@ -99,5 +110,6 @@ export function* userSagas() {
     call(onSignOutStart),
     call(onCheckUserSession),
     call(onSignUpStart),
+    call(onSignUpSuccess),
   ]);
 }
