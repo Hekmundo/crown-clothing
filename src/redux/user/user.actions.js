@@ -36,3 +36,7 @@ export const signOutFailure = (errorMessage) => ({
   type: UserActionTypes.SIGN_OUT_FAILURE,
   payload: errorMessage,
 });
+
+export const checkUserSession = () => ({
+  type: UserActionTypes.CHECK_USER_SESSION,
+});
