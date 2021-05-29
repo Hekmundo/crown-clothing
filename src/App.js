@@ -14,7 +14,7 @@ import Header from './components/header/header.component';
 const App = ({ currentUser, checkUserSession }) => {
   useEffect(() => {
     checkUserSession();
-  }, []);
+  }, [checkUserSession]);
 
   return (
     <div>
