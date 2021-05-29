@@ -5,6 +5,7 @@ import {
   signInSuccess,
   signOutSuccess,
   signOutFailure,
+  signUpFailure,
 } from './user.actions';
 import { clearCart } from '../cart/cart.actions';
 import {
@@ -19,7 +20,6 @@ function* getSnapshotFromUserAuth(userAuth) {
     const userRef = yield call(createUserProfileDocument, userAuth);
     const userSnapshot = yield userRef.get();
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
-    yield put;
   } catch (error) {
     yield put(signInFailure(error.message));
   }
@@ -53,6 +53,15 @@ function* signOut() {
   }
 }
 
+function* signUp({ payload: { displayName, email, password } }) {
+  try {
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    yield getSnapshotFromUserAuth({ ...user, displayName });
+  } catch (error) {
+    put(signUpFailure(error.message));
+  }
+}
+
 function* isUserAuthenticated() {
   try {
     const userAuth = yield getCurrentUser();
@@ -75,6 +84,10 @@ function* onSignOutStart() {
   yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
+function* onSignUpStart() {
+  yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
+}
+
 function* onCheckUserSession() {
   yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated);
 }
@@ -85,5 +98,6 @@ export function* userSagas() {
     call(onEmailSignInStart),
     call(onSignOutStart),
     call(onCheckUserSession),
+    call(onSignUpStart),
   ]);
 }
