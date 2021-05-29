@@ -6,17 +6,19 @@ import {
   signOutSuccess,
   signOutFailure,
 } from './user.actions';
+import { clearCart } from '../cart/cart.actions';
 import {
   auth,
   googleProvider,
   createUserProfileDocument,
 } from '../../firebase/firebase.utils';
 
-function* signIn(user) {
+function* getSnapshotFromUserAuth(userAuth) {
   try {
-    const userRef = yield call(createUserProfileDocument, user);
+    const userRef = yield call(createUserProfileDocument, userAuth);
     const userSnapshot = yield userRef.get();
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+    yield put;
   } catch (error) {
     yield put(signInFailure(error.message));
   }
@@ -25,7 +27,7 @@ function* signIn(user) {
 function* signInWithGoogle() {
   try {
     const { user } = yield auth.signInWithPopup(googleProvider);
-    yield signIn(user);
+    yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield put(signInFailure(error.message));
   }
@@ -34,7 +36,7 @@ function* signInWithGoogle() {
 function* signInWithEmail({ payload: { email, password } }) {
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
-    yield signIn(user);
+    yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield put(signInFailure(error.message));
   }
@@ -44,6 +46,7 @@ function* signOut() {
   try {
     yield auth.signOut();
     yield put(signOutSuccess());
+    yield put(clearCart());
   } catch (error) {
     yield put(signOutFailure(error.message));
   }
