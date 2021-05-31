@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
-import CollectionContainer from '../../components/collection/collection.container';
+import Collection from '../../components/collection/collection.component';
 
 const ShopPage = ({ match }) => {
   const dispatch = useDispatch();
@@ -15,10 +15,7 @@ const ShopPage = ({ match }) => {
   return (
     <div>
       <Route exact path={`${match.path}`} component={CollectionsOverview} />
-      <Route
-        path={`${match.path}/:collectionId`}
-        component={CollectionContainer}
-      />
+      <Route path={`${match.path}/:collectionId`} component={Collection} />
     </div>
   );
 };
