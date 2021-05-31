@@ -1,20 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useSelector } from 'react-redux';
 import { selectDirectorySections } from '../../redux/directory/directory.selectors';
 import { DirectoryContainer } from './directory.styles';
 import DirectoryItem from '../directory-item/directory-item.component';
 
-const Directory = ({ sections }) => (
-  <DirectoryContainer>
-    {sections.map(({ id, ...otherSectionsProps }) => (
-      <DirectoryItem key={id} {...otherSectionsProps} />
-    ))}
-  </DirectoryContainer>
-);
+const Directory = () => {
+  const sections = useSelector(selectDirectorySections);
 
-const mapStateToProps = createStructuredSelector({
-  sections: selectDirectorySections,
-});
+  return (
+    <DirectoryContainer>
+      {sections.map(({ id, ...otherSectionsProps }) => (
+        <DirectoryItem key={id} {...otherSectionsProps} />
+      ))}
+    </DirectoryContainer>
+  );
+};
 
-export default connect(mapStateToProps)(Directory);
+export default Directory;

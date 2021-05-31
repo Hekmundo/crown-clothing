@@ -26,7 +26,7 @@ export const CartItems = styled.div`
   height: 240px;
   display: flex;
   flex-direction: column;
-  ${(props) => (props.overflow ? cartOverflow : '')}
+  ${(props) => (props.cartLength > 2 ? cartOverflow : '')}
 `;
 
 export const EmptyMessage = styled.span`
