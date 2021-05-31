@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import {
   DirectoryItemContainer,
   BackgroundImage,
@@ -8,18 +8,22 @@ import {
   Subtitle,
 } from './directory-item.styles';
 
-const DirectoryItem = ({ title, imageUrl, size, history, linkUrl, match }) => (
-  <DirectoryItemContainer
-    size={size}
-    onClick={() => history.push(`${match.url}${linkUrl}`)}
-  >
-    <BackgroundImage imageUrl={imageUrl} />
-    <Content>
-      <Title>{title.toUpperCase()}</Title>
-      <Subtitle>SHOP NOW</Subtitle>
-    </Content>
-  </DirectoryItemContainer>
-);
+const DirectoryItem = ({ title, imageUrl, size, linkUrl }) => {
+  const history = useHistory();
+  const match = useRouteMatch();
 
-// withRouter() gives component access to react-router props
-export default withRouter(DirectoryItem);
+  return (
+    <DirectoryItemContainer
+      size={size}
+      onClick={() => history.push(`${match.url}${linkUrl}`)}
+    >
+      <BackgroundImage imageUrl={imageUrl} />
+      <Content>
+        <Title>{title.toUpperCase()}</Title>
+        <Subtitle>SHOP NOW</Subtitle>
+      </Content>
+    </DirectoryItemContainer>
+  );
+};
+
+export default DirectoryItem;

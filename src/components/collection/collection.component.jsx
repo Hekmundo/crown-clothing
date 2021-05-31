@@ -1,10 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectCollection } from '../../redux/shop/shop.selectors';
 import { CollectionContainer, Title, Items } from './collection.styles';
 import CollectionItem from '../collection-item/collection-item.component';
+import WithSpinner from '../with-spinner/with-spinner.component';
 
-const Collection = ({ collection }) => {
+const Collection = ({ match }) => {
+  const collection = useSelector((state) =>
+    selectCollection(match.params.collectionId)(state)
+  );
+
   const { title, items } = collection;
   return (
     <CollectionContainer>
@@ -18,8 +23,4 @@ const Collection = ({ collection }) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  collection: selectCollection(ownProps.match.params.collectionId)(state),
-});
-
-export default connect(mapStateToProps)(Collection);
+export default WithSpinner(Collection);
