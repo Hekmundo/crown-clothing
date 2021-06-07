@@ -66,7 +66,8 @@ export const DirectoryItemContainer = styled.div`
     margin-left: 7.5px;
   }
 
-  @media only screen and (max-width: 745px) {
-    min-width: 100%;
+  @media only screen and (max-width: 800px) {
+    height: 200px;
+    min-width: 80%;
   }
 `;

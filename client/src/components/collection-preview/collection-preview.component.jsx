@@ -10,14 +10,12 @@ import {
 import CollectionItem from '../collection-item/collection-item.component';
 
 const CollectionPreview = ({ title, items }) => {
-  const linkUrl = useSelector((state) => selectSectionLinkUrl(title)(state));
   const history = useHistory();
+  const linkUrl = useSelector(selectSectionLinkUrl(title));
 
   return (
     <CollectionPreviewContainer>
-      <Title onClick={() => history.push(`/${linkUrl}`)}>
-        {title.toUpperCase()}
-      </Title>
+      <Title onClick={() => history.push(linkUrl)}>{title.toUpperCase()}</Title>
       <ItemsPreview>
         {items.slice(0, 4).map((item) => (
           <CollectionItem key={item.id} item={item} />

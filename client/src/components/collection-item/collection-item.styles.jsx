@@ -24,6 +24,13 @@ export const CollectionItemContainer = styled.div`
     position: absolute;
     top: 255px;
     display: none;
+
+    @media screen and (max-width: 800px) {
+      display: block;
+      opacity: 0.9;
+      min-width: unset;
+      padding: 0 10px;
+    }
   }
 
   &:hover {
@@ -36,6 +43,24 @@ export const CollectionItemContainer = styled.div`
       display: flex;
     }
   }
+
+  @media screen and (max-width: 800px) {
+    width: 40vw;
+
+    &:hover {
+      ${Image} {
+        opacity: unset;
+      }
+
+      ${CustomButtonContainer} {
+        opacity: unset;
+      }
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 80vw;
+  }
 `;
 
 export const CollectionFooter = styled.div`
@@ -47,10 +72,10 @@ export const CollectionFooter = styled.div`
 `;
 
 export const Name = styled.span`
-  width: 90%;
+  width: 80%;
   margin-bottom: 15px;
 `;
 
 export const Price = styled.span`
-  width: 10%;
+  margin-right: 2px;
 `;
