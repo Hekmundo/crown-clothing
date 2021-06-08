@@ -4,16 +4,16 @@ import { CustomButtonContainer } from '../custom-button/custom-button.styles';
 export const Image = styled.div`
   background-image: url(${(props) => props.imageUrl});
   width: 100%;
-  height: 95%;
+  height: 100%;
   background-size: cover;
   background-position: center;
   margin-bottom: 5px;
 `;
 
 export const CollectionItemContainer = styled.div`
-  width: 22vw;
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 350px;
   align-items: center;
   position: relative;
@@ -60,6 +60,10 @@ export const CollectionItemContainer = styled.div`
 
   @media screen and (max-width: 400px) {
     width: 80vw;
+  }
+
+  @media screen and (min-width: 1375px) {
+    height: 500px;
   }
 `;
 

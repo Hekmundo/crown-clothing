@@ -16,6 +16,10 @@ export const CartDropdownContainer = styled.div`
   button {
     margin-top: auto;
   }
+
+  @media screen and (max-width: 800px) {
+    right: 30px;
+  }
 `;
 
 const cartOverflow = css`
