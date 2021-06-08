@@ -5,7 +5,7 @@ import { selectSectionLinkUrl } from '../../redux/directory/directory.selectors'
 import {
   CollectionPreviewContainer,
   Title,
-  ItemsPreview,
+  ItemsContainer,
 } from './collection-preview.styles';
 import CollectionItem from '../collection-item/collection-item.component';
 
@@ -16,11 +16,11 @@ const CollectionPreview = ({ title, items }) => {
   return (
     <CollectionPreviewContainer>
       <Title onClick={() => history.push(linkUrl)}>{title.toUpperCase()}</Title>
-      <ItemsPreview>
+      <ItemsContainer>
         {items.slice(0, 4).map((item) => (
           <CollectionItem key={item.id} item={item} />
         ))}
-      </ItemsPreview>
+      </ItemsContainer>
     </CollectionPreviewContainer>
   );
 };

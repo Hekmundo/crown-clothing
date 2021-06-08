@@ -17,6 +17,7 @@ export const CollectionItemContainer = styled.div`
   height: 350px;
   align-items: center;
   position: relative;
+  margin-bottom: 30px;
 
   ${CustomButtonContainer} {
     width: 80%;
@@ -62,8 +63,10 @@ export const CollectionItemContainer = styled.div`
     width: 80vw;
   }
 
-  @media screen and (min-width: 1375px) {
+  ${
+    '' /* @media screen and (min-width: 1375px) {
     height: 500px;
+  } */
   }
 `;
 

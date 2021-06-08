@@ -1,15 +1,16 @@
 import styled from 'styled-components';
-import { ItemsContainer } from '../collection/collection.styles';
+import {
+  ShopItemsContainer,
+  CollectionAndPreviewContainer,
+} from '../../pages/shop/shop.styles';
 
-export const CollectionPreviewContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 60px;
-
-  @media screen and (max-width: 800px) {
-    align-items: center;
+export const CollectionPreviewContainer = styled(CollectionAndPreviewContainer)`
+  @media screen and (max-width: 400px) {
+    border-bottom: 1px solid darkgrey;
   }
 `;
+
+export const ItemsContainer = styled(ShopItemsContainer)``;
 
 export const Title = styled.h1`
   font-size: 38px;
@@ -18,5 +19,3 @@ export const Title = styled.h1`
   width: fit-content;
   cursor: pointer;
 `;
-
-export const ItemsPreview = styled(ItemsContainer)``;
