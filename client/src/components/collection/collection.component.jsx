@@ -1,7 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectCollection } from '../../redux/shop/shop.selectors';
-import { CollectionContainer, Title, Items } from './collection.styles';
+import {
+  CollectionContainer,
+  Title,
+  ItemsContainer,
+} from './collection.styles';
 import CollectionItem from '../collection-item/collection-item.component';
 import WithSpinner from '../with-spinner/with-spinner.component';
 
@@ -14,11 +18,11 @@ const Collection = ({ match }) => {
   return (
     <CollectionContainer>
       <Title>{title.toUpperCase()}</Title>
-      <Items>
+      <ItemsContainer>
         {items.map((item) => (
           <CollectionItem key={item.id} item={item} />
         ))}
-      </Items>
+      </ItemsContainer>
     </CollectionContainer>
   );
 };

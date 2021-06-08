@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Items } from '../collection/collection.styles';
+import { ItemsContainer } from '../collection/collection.styles';
 
 export const CollectionPreviewContainer = styled.div`
   display: flex;
@@ -19,4 +19,4 @@ export const Title = styled.h1`
   cursor: pointer;
 `;
 
-export const ItemsPreview = styled(Items)``;
+export const ItemsPreview = styled(ItemsContainer)``;

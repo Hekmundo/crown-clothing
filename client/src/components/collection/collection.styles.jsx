@@ -12,12 +12,12 @@ export const Title = styled.h2`
   margin: 0 auto 30px;
 `;
 
-export const Items = styled.div`
+export const ItemsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-content: center;
   justify-items: center;
-  grid-gap: 10px;
+  grid-gap: 15px;
 
   & ${CollectionItemContainer} {
     margin-bottom: 30px;
