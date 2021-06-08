@@ -33,7 +33,7 @@ export const LogoContainer = styled(Link)`
   align-items: center;
 
   @media screen and (max-width: 800px) {
-    width: 50px;
+    width: 60px;
     align-items: initial;
   }
 `;

@@ -4,10 +4,10 @@ import {
   googleSignInStart,
   emailSignInStart,
 } from '../../redux/user/user.actions';
-import { ButtonsContainer } from './sign-in.styles';
 import {
   FormContainer as SignInContainer,
   Title,
+  ButtonsContainer,
 } from '../../pages/sign-in-and-sign-up/sign-in-and-sign-up.styles';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
