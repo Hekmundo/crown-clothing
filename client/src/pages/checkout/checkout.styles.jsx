@@ -6,11 +6,19 @@ export const CheckoutPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px auto 0;
+  margin: 50px auto 40px;
 
   button {
     margin-left: auto;
     margin-top: 50px;
+  }
+
+  @media screen and (max-width: 800px) {
+    width: 85%;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 12px;
   }
 `;
 
@@ -28,6 +36,10 @@ export const HeaderBlock = styled.div`
 
   &:last-child {
     width: 8%;
+
+    @media screen and (max-width: 600px) {
+      ${'' /* width: 10%; */}
+    }
   }
 `;
 

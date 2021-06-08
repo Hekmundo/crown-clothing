@@ -5,13 +5,18 @@ export const CheckoutItemContainer = styled.div`
   display: flex;
   min-height: 100px;
   border-bottom: 1px solid darkgrey;
-  padding: 15px 0;
+  padding: 15px 0px;
   font-size: 20px;
   align-items: center;
+
+  @media screen and (max-width: 400px) {
+    font-size: 16px;
+  }
 `;
 
 const blockStyles = css`
   width: 23%;
+  padding: 0px 2px;
 `;
 
 export const ImageContainer = styled.div`
@@ -46,6 +51,6 @@ export const QuantityValue = styled.span`
 `;
 
 export const RemoveButton = styled.div`
-  padding-left: 12px;
+  padding-left: 6px;
   cursor: pointer;
 `;
