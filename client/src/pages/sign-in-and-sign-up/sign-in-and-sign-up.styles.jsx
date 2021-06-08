@@ -23,7 +23,7 @@ export const FormContainer = styled.div`
   flex-direction: column;
 
   @media screen and (max-width: 950px) {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     width: 70vw;
   }
 
