@@ -8,6 +8,7 @@ import Spinner from '../../components/spinner/spinner.component';
 const Collection = lazy(() =>
   import('../../components/collection/collection.component')
 );
+
 const CollectionsOverview = lazy(() =>
   import('../../components/collections-overview/collections-overview.component')
 );
