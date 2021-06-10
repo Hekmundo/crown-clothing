@@ -2,14 +2,13 @@ const express = require('express');
 const path = require('path');
 const compression = require('compression');
 
-// For production, Heroku takes the .env variables
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config(); // For production, Heroku takes the .env variables
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(compression());
+app.use(compression()); // Heroku doesn't have native gzipping
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
