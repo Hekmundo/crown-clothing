@@ -6,8 +6,6 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config(); // For pr
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
-const port = process.env.PORT || 5000;
-
 app.use(compression()); // Heroku doesn't have native gzipping
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,7 +35,7 @@ app.post('/payment', (req, res) => {
   });
 });
 
-app.listen(port, (error) => {
-  if (error) throw error;
-  console.log('Server running on port ' + port);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });

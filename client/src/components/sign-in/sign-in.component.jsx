@@ -21,6 +21,7 @@ const SignIn = () => {
 
   const { email, password } = userCredentials;
 
+  // ! remove this async code
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(emailSignInStart({ email, password }));

@@ -14,8 +14,6 @@ function* fetchCollectionsAsync() {
     const collectionRef = firestore.collection('collections');
     const snapShot = yield collectionRef.get();
 
-    // call() allows syncronous functions to be yielded,
-    // AND defers more control to redux-saga
     const collectionsMap = yield call(
       convertCollectionsSnapshotToMap,
       snapShot

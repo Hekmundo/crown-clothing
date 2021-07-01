@@ -18,6 +18,7 @@ const Header = () => {
   const cartHidden = useSelector(selectCartHidden);
   const dispatch = useDispatch();
 
+  // TODO: Create Contact page
   return (
     <HeaderContainer>
       <LogoContainer to='/'>
@@ -25,7 +26,7 @@ const Header = () => {
       </LogoContainer>
       <OptionsContainer>
         <OptionLink to='/shop'>SHOP</OptionLink>
-        <OptionLink>CONTACT</OptionLink>
+        {/* <OptionLink>CONTACT</OptionLink> */}
         {currentUser ? (
           <OptionLink as='div' onClick={() => dispatch(signOutStart())}>
             SIGN OUT
