@@ -7,11 +7,11 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config(); // For pr
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
-app.use(compression()); // Heroku doesn't have native gzipping
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV === 'production') {
+  app.use(compression()); // Heroku doesn't have native gzipping
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
   app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -42,6 +42,7 @@ app.post('/payment', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, (error) => {
+  if (error) throw error;
   console.log(`Server is listening on port ${PORT}`);
 });
