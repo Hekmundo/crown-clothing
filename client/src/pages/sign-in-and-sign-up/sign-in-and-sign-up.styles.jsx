@@ -18,7 +18,7 @@ export const SignInAndSignUpPageContainer = styled.div`
 `;
 
 export const FormContainer = styled.div`
-  width: 380px;
+  width: 400px;
   display: flex;
   flex-direction: column;
 

@@ -59,6 +59,7 @@ export const convertCollectionsSnapshotToMap = (collections) => {
   const transformedCollection = collections.docs.map((doc) => {
     const { title, items } = doc.data();
     return {
+      // encodeURI will remove spaces and illegal JavaScript characters
       routeName: encodeURI(title.toLowerCase()),
       id: doc.id,
       title,
