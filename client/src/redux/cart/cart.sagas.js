@@ -4,53 +4,45 @@ import UserActionTypes from '../user/user.types';
 import CartActionTypes from './cart.types';
 import {
   clearCart,
-  updateFirestoreCartSuccess,
-  updateFirestoreCartFailed,
-  updateLocalCartSuccess,
-  updateLocalCartFailed,
+  setCartFromFirebase,
+  updateCartInFirebaseSuccess,
+  updateCartInFirebaseFailed,
 } from './cart.actions';
 
 import { selectCartItems } from './cart.selectors';
 import { selectCurrentUserId } from '../user/user.selectors';
-import {
-  updateFirestoreCart,
-  getUserCart,
-} from '../../firebase/firebase.utils';
+import { getUserCartRef } from '../../firebase/firebase.utils';
 
 function* clearCartOnSignOut() {
   yield put(clearCart());
 }
 
-function* hydrateCart({ payload }) {
-  try {
-    const userCart = yield call(getUserCart, payload);
-    yield put(updateLocalCartSuccess(userCart));
-  } catch (error) {
-    yield put(updateLocalCartFailed(error.message));
+export function* checkCartFromFirebase({ payload: user }) {
+  const cartRef = yield getUserCartRef(user.id);
+  const cartSnapshot = yield cartRef.get();
+  yield put(setCartFromFirebase(cartSnapshot.data().cartItems));
+}
+
+function* updateCartInFirebase() {
+  const userId = yield select(selectCurrentUserId);
+  if (userId) {
+    try {
+      const cartRef = yield getUserCartRef(userId);
+      const cartItems = yield select(selectCartItems);
+      yield cartRef.update({ cartItems });
+      yield put(updateCartInFirebaseSuccess);
+    } catch (error) {
+      yield put(updateCartInFirebaseFailed(error.message));
+    }
   }
 }
 
-function* updateUserCart() {
-  try {
-    const currentUserId = yield select(selectCurrentUserId);
-    if (!currentUserId) return;
-
-    const cartItemsLocal = yield select(selectCartItems);
-    yield call(updateFirestoreCart, currentUserId, cartItemsLocal);
-
-    yield put(updateFirestoreCartSuccess());
-  } catch (error) {
-    yield put(updateFirestoreCartFailed(error.message));
-  }
-}
-
-// ! Remove this action listener and add clear cart action to user.sagas
 function* onSignOutSuccess() {
   yield takeLatest(UserActionTypes.SIGN_OUT_SUCCESS, clearCartOnSignOut);
 }
 
-function* onHydrateCart() {
-  yield takeLatest(CartActionTypes.HYDRATE_CART, hydrateCart);
+export function* onUserSignIn() {
+  yield takeLatest(UserActionTypes.SIGN_IN_SUCCESS, checkCartFromFirebase);
 }
 
 function* onCartChange() {
@@ -59,13 +51,11 @@ function* onCartChange() {
       CartActionTypes.ADD_ITEM,
       CartActionTypes.REMOVE_ITEM,
       CartActionTypes.CLEAR_ITEM_FROM_CART,
-
-      // CLEAR_CART is not included as that only occurs on sign out
     ],
-    updateUserCart
+    updateCartInFirebase
   );
 }
 
 export function* cartSagas() {
-  yield all([call(onSignOutSuccess), call(onCartChange), call(onHydrateCart)]);
+  yield all([call(onSignOutSuccess), call(onCartChange), call(onUserSignIn)]);
 }

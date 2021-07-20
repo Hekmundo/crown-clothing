@@ -10,8 +10,6 @@ import {
   signUpSuccess,
 } from './user.actions';
 
-import { hydrateCart } from '../cart/cart.actions';
-
 import {
   auth,
   googleProvider,
@@ -27,13 +25,7 @@ function* getSnapshotFromUserAuth(userAuth, additionalData) {
       additionalData
     );
     const userSnapshot = yield userRef.get();
-
-    const { displayName, createdAt, email, cartItems } = userSnapshot.data();
-
-    yield put(
-      signInSuccess({ id: userSnapshot.id, displayName, createdAt, email })
-    );
-    yield put(hydrateCart(cartItems));
+    yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
     yield put(signInFailure(error.message));
   }

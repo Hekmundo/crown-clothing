@@ -14,11 +14,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         ...state,
         hidden: !state.hidden,
       };
-    case CartActionTypes.UPDATE_LOCAL_CART_SUCCESS:
-      return {
-        ...state,
-        cartItems: action.payload,
-      };
+
     case CartActionTypes.ADD_ITEM:
       return {
         ...state,
@@ -41,8 +37,12 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         ...state,
         cartItems: [],
       };
-    case CartActionTypes.UPDATE_FIRESTORE_CART_FAILED:
-    case CartActionTypes.UPDATE_LOCAL_CART_FAILED:
+    case CartActionTypes.SET_CART_FROM_FIREBASE:
+      return {
+        ...state,
+        cartItems: action.payload,
+      };
+    case CartActionTypes.UPDATE_CART_IN_FIREBASE_FAILED:
       return {
         ...state,
         errorMessage: action.payload,

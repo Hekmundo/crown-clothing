@@ -23,26 +23,16 @@ export const clearCart = () => ({
   type: CartActionTypes.CLEAR_CART,
 });
 
-export const updateFirestoreCartSuccess = () => ({
-  type: CartActionTypes.UPDATE_FIRESTORE_CART_SUCCESS,
+export const updateCartInFirebaseSuccess = () => ({
+  type: CartActionTypes.UPDATE_CART_IN_FIREBASE,
 });
 
-export const updateFirestoreCartFailed = (errorMessage) => ({
-  type: CartActionTypes.UPDATE_FIRESTORE_CART_FAILED,
+export const updateCartInFirebaseFailed = (errorMessage) => ({
+  type: CartActionTypes.UPDATE_CART_IN_FIREBASE_FAILED,
   payload: errorMessage,
 });
 
-export const hydrateCart = (cartItemsByIdAndQuantity) => ({
-  type: CartActionTypes.HYDRATE_CART,
-  payload: cartItemsByIdAndQuantity,
-});
-
-export const updateLocalCartSuccess = (cartItems) => ({
-  type: CartActionTypes.UPDATE_LOCAL_CART_SUCCESS,
+export const setCartFromFirebase = (cartItems) => ({
+  type: CartActionTypes.SET_CART_FROM_FIREBASE,
   payload: cartItems,
-});
-
-export const updateLocalCartFailed = (errorMessage) => ({
-  type: CartActionTypes.UPDATE_LOCAL_CART_FAILED,
-  payload: errorMessage,
 });

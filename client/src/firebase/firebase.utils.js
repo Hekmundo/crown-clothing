@@ -38,8 +38,9 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-// Unused, should this function be on the front end?
-// Used to batch post shop collections to firestore db
+// Function used only when posting batch collections to firestore db
+// ! If collections change in anyway, carts collection MUST be reset
+// ! to avoid users holding out of date collection data
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd
@@ -82,42 +83,18 @@ export const getCurrentUser = () => {
   });
 };
 
-export const getUserCart = async (cartItemsByIdAndQuantity) => {
-  try {
-    const collectionRef = firestore.collection('collections');
-    const snapShot = await collectionRef.get();
+// Check if there is a cart for this user, create a new empty cart if not
+export const getUserCartRef = async (userId) => {
+  const cartsRef = firestore.collection('carts').where('userId', '==', userId);
+  const snapShot = await cartsRef.get();
+  console.log(snapShot);
 
-    const collectionsDataArray = snapShot.docs.reduce(
-      (acc, doc) => [...acc, ...doc.data().items],
-      []
-    );
-
-    return cartItemsByIdAndQuantity.map((cartItem) => {
-      return {
-        quantity: cartItem.quantity,
-        ...collectionsDataArray.find(
-          (collectionItem) => cartItem.id === collectionItem.id
-        ),
-      };
-    });
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-export const updateFirestoreCart = async (userId, cartItems) => {
-  const cartItemsByIdAndQuantity = cartItems.map((cartItem) => ({
-    id: cartItem.id,
-    quantity: cartItem.quantity,
-  }));
-
-  try {
-    const userRef = firestore.doc(`users/${userId}`);
-    await userRef.update({
-      cartItems: cartItemsByIdAndQuantity,
-    });
-  } catch (error) {
-    throw new Error(error.message);
+  if (snapShot.empty) {
+    const cartDocRef = firestore.collection('carts').doc();
+    await cartDocRef.set({ userId, cartItems: [] });
+    return cartDocRef;
+  } else {
+    return snapShot.docs[0].ref;
   }
 };
 
