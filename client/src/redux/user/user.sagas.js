@@ -1,4 +1,5 @@
 import { takeLatest, call, all, put } from 'redux-saga/effects';
+
 import UserActionTypes from './user.types';
 import {
   signInFailure,
@@ -8,6 +9,9 @@ import {
   signUpFailure,
   signUpSuccess,
 } from './user.actions';
+
+import { hydrateCart } from '../cart/cart.actions';
+
 import {
   auth,
   googleProvider,
@@ -23,7 +27,13 @@ function* getSnapshotFromUserAuth(userAuth, additionalData) {
       additionalData
     );
     const userSnapshot = yield userRef.get();
-    yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+
+    const { displayName, createdAt, email, cartItems } = userSnapshot.data();
+
+    yield put(
+      signInSuccess({ id: userSnapshot.id, displayName, createdAt, email })
+    );
+    yield put(hydrateCart(cartItems));
   } catch (error) {
     yield put(signInFailure(error.message));
   }

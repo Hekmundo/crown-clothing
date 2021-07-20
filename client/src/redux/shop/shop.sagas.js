@@ -1,9 +1,11 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
+
 import ShopActionTypes from './shop.types';
 import {
   fetchCollectionsSuccess,
   fetchCollectionsFailure,
 } from './shop.actions';
+
 import {
   convertCollectionsSnapshotToMap,
   firestore,
